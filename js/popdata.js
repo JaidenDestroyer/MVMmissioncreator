@@ -1,3 +1,5 @@
+// THIS FILE IS USELESS
+
 var classes = {
 	"waveschedule": {
 		"values": {
