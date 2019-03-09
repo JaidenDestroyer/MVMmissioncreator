@@ -1,75 +1,34 @@
-// code editor setup
-$(document).ready(function(){
-$("#file-input-pop").change(function(){
-        var input = event.target;
-        var reader = new FileReader();
-        reader.onload = function(){
-             // the files content
-            var str = reader.result;
-		str = str.replace(/\/\/.*/g, "");
-		//str = str.replace(/^\s+|[ \t\r\f]+$/gm, "");
-		str = str.replace(/^[ \t\r\f]+|[ \t\r\f]+$/gm, "");
-		const lines = str.split('\n');
-		const pop = new Population();
-		const population = parse(lines);
-		if (population != null) pop.loadNode(parse(lines));
-		console.log(pop);
-		const test = new Compile();
-		test.Generate(pop);
-		console.warn(test.output);
-		// store var
-		localStorage.setItem('population', JSON.stringify(pop));
-            // clear the file to allow loading of the same file multiple times
-            $("#file-input-pop").prop("value", "")
-        };
-        reader.readAsText(input.files[0]);
-    });
+function readPop()
+{
+	const input = event.target;
+	if (!input.files.length) return; // no files selected
+	console.log(input);
 
-    $("#file-input-map").change(function(){
-        const input = event.target;
-        const reader = new FileReader();
-        reader.onload = function(){
-            // the files content
-            const text = reader.result;
-            // the map analyzer
-            const map = new MapAnalyzer();
-            // all entitys
-            map.analyze(text);
-            console.log('BLUE SPAWNS:');
-            spawn_points_targetname_length = map.spawn_points_targetname.length;
-            if (spawn_points_targetname_length < 1){
-                // do stuff if no spawns were found
-                alert('Failed to find any spawns!');
-            }else{
-                // do stuff if spawn(s) were found
-                clear_list('spawn_points');
-                for (i = 0; i < spawn_points_targetname_length; i++) { 
-                    console.log(map.spawn_points_targetname[i]);
-                    add_spawn_to_list('spawn_points', map.spawn_points_targetname[i], map.spawn_points[i]);
-                }
-                openScanInfo();
-            }
-            console.log('LOGIC_RELAYS:');
-            logic_relays_targetname_length = map.logic_relays_targetname.length;
-            if (logic_relays_targetname_length < 1){
-                // do stuff if no relays were found
-                alert('Failed to find any logic_relays!');
-            }else{
-                // do stuff if spawn(s) were found
-                clear_list('logic_relays');
-                for (i = 0; i < logic_relays_targetname_length; i++) { 
-                    console.log(map.logic_relays_targetname[i]);
-                    add_spawn_to_list('logic_relays', map.logic_relays_targetname[i], map.logic_relays[i]);
-                }
-                openScanInfo();
-            }
-            // clear the file to allow loading of the same file multiple times
-            $("#file-input-map").prop("value", "")
-        };
-        reader.readAsBinaryString(input.files[0]);
-    });
+	// create a new file reader
+	const reader = new FileReader();
 
-});
+	// do stuff when the file is loaded
+	reader.onload = function()
+	{
+		let text = reader.result;
+		text = text.replace(/\/\/.*/g, ""); //remove comments
+        text = text.replace(/^[ \t\r\f]+|[ \t\r\f]+$/gm, ""); //remove spaces
+
+        const pop = new Population();
+        const node = parse(text.split('\n')); //split into lines and load
+        if (node != null) pop.loadNode(node); // load the node 
+
+        window.editor.create();
+
+        // store var
+        localStorage.setItem('population', JSON.stringify(pop));
+
+        // clear the file to allow loading of the same file multiple times
+		input.value = '';
+	}
+
+	reader.readAsText(input.files[0]); // load the first file
+}
 
 function download(filename, text) {
     var pom = document.createElement('a');
