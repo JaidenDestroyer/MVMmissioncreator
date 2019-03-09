@@ -11,3 +11,6 @@ __Current Features__
 __NOTES__
 
 * I am currently phasing out codemirror from this project, so editor.html will __NOT__ run 
+* Generator is not fully implemented
+* New Gui Is Broken
+* This code is poorly optimized 
