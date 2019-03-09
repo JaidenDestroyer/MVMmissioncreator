@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mission Editor</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script>
+		<script type="text/javascript" src="./js/node.js"></script>
+	</head>
+	<body>
+		<canvas id="editor" width="30000" height="3000"></canvas>
+	</body>
+	<script>
+
+		//var canvas = this.__canvas = new fabric.Canvas('editor', { selection: false });
+	  fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
+  	var editor = new Editor();
+  	editor.loadPop(JSON.parse(localStorage.getItem('population')));
+
+	</script>
+</html>
