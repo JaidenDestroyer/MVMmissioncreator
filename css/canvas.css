@@ -1,0 +1,153 @@
+body {
+	background-color: #555;
+}
+
+/*
+	WAVE HUD
+*/
+
+.wavehud {
+	text-align: center;
+	display: inline-block;
+	padding: 0px 20px;
+	color: rgba(200, 200, 200, 127);
+
+	background-color: rgba(0, 0, 0, 0.33);
+
+	border: 2px solid #D3C0A0;
+	border-radius: 10px;
+
+	min-width: 20%;
+}
+
+#progressbar {
+	background-color: #ECE2C8;
+	border-radius: 5px;
+
+	/* (height of inner div) / 2 + padding */
+
+	padding: 3px;
+}
+
+#progressbar>div {
+	background-color: #5A7A8F;
+	width: 0%;
+
+	height: 20px;
+	border-radius: 5px;
+}
+
+.waveBot {
+	display: inline-block;
+	padding: 3px;
+	font-family: tf2secondary;
+	font-size: 1.5em;
+}
+
+.waveBot>p {
+	margin: 0;
+}
+
+.waveBotIcon {
+	position: relative;
+	padding: 4px;
+	display: inline-block;
+}
+
+.giant {
+	display: inline-block;
+	padding: 3px 3px;
+	border-radius: 4px;
+	background: #bf1603;
+}
+
+.normal {
+	display: inline-block;
+	padding: 3px 3px;
+	border-radius: 4px;
+	background: #ebe4ca;
+}
+
+.support
+{
+	position: relative;
+	bottom: 16.8px;
+}
+
+.critical {
+	border-radius: 4px;
+
+	-webkit-animation: BOT-CRITICAL 0.5s infinite;
+	/* Safari 4+ */
+	-moz-animation: BOT-CRITICAL 0.5s infinite;
+	/* Fx 5+ */
+	-o-animation: BOT-CRITICAL 0.5s infinite;
+	/* Opera 12+ */
+	animation: BOT-CRITICAL 0.5s infinite;
+	/* IE 10+, Fx 29+ */
+}
+
+@keyframes BOT-CRITICAL {
+	0%,
+	49% {
+		box-shadow: 0 0 0 3px #009AC6
+	}
+
+	50%,
+	100% {
+		box-shadow: 0 0 0 3px #00CFEC
+	}
+}
+
+.waveBotIcon>img {
+	display: block;
+}
+
+.waveBotIcon>img.botIcon {
+	height: 32px;
+	width: auto;
+}
+
+.waveBotIcon>img.botIconBG {
+	height: 42px;
+	width: auto;
+}
+
+.waveBotIcon>img.botIconBG2 {
+	height: 44px;
+	width: auto;
+}
+
+.waveBotIcon>img:not(:first-child) {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.supportBar {
+	display: inline-block;
+	height: 55px;
+	margin: 5px;
+	padding: 1px 1px;
+	border-radius: 4px;
+	background: #ebe4ca;
+}
+
+.waveText {
+	font-family: tf2build;
+}
+
+.supportfirst
+{
+	position: relative;
+	margin-left: -19px;
+	/*margin-right: -19px; */
+}
+
+.supportsecond
+{
+	position: relative;
+	margin-left: -19px;
+	bottom: 16.8px;
+}

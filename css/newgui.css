@@ -1,0 +1,94 @@
+body {
+    background-color: rgb(40, 44, 52);
+    padding: 15px;
+}
+
+header {
+	color: white;
+	background-color: #616161;
+	padding: 1px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.navbar {
+	width: 100%;
+  	display: flex;
+  	justify-content: center;
+}
+
+.navbar button {
+	color: white;
+	background-color: #616161;
+	border: none;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px;
+}
+
+.navbar button:hover {
+	background-color: #555;
+}
+
+#waves-container {
+	display: flex; 
+	padding-top: 10px;
+}
+
+.wave-navbar {
+	list-style-type: none;
+	color: white;
+	background-color: #616161;
+	width: 100px;
+	margin: 0;
+	padding: 0;
+}
+
+.wave-navbar li {
+	padding: 10px;
+}
+
+.wave-navbar li:hover {
+	background-color: #555;
+}
+
+
+.wave {
+	margin-left: 10px;
+	padding: 0;
+	background-color: #616161;
+	flex-grow: 1;
+}
+
+#overview-container {
+	background-color: #616161;
+	margin-top: 10px;
+	padding-bottom: 400px;
+
+}
+
+#export-buttons {
+	width: 100%;
+  	display: flex;
+  	justify-content: center;
+}
+
+#export-buttons button {
+	color: black;
+	background-color: #c6c9ce;
+	border: none;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px;
+}
+
+#export-buttons button:hover {
+	color: white;
+	background-color: #555;
+}

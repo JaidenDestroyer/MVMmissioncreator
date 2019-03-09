@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "tf2secondary";
+    font-style: normal;
+    font-weight: normal;
+    src: url("fonts/tf2secondary.ttf"), url("fonts/tf2secondary.eot");
+}
+
+@font-face {
+    font-family: "tf2";
+    font-style: normal;
+    font-weight: normal;
+    src: url("fonts/tf2.ttf"), url("fonts/tf2.eot");
+}
+
+@font-face {
+    font-family: "tf2build";
+    font-style: normal;
+    font-weight: normal;
+    src: url("fonts/tf2build.ttf");
+}
+
