@@ -18,6 +18,8 @@ function readPop()
         const node = parse(text.split('\n')); //split into lines and load
         if (node != null) pop.loadNode(node); // load the node 
 
+        window.editor.create();
+
         // store var
         localStorage.setItem('population', JSON.stringify(pop));
 
