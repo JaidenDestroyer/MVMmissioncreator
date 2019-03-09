@@ -1,46 +1,6 @@
 // code editor setup
 $(document).ready(function(){
-    editor.on('change',function(editor){
-        // get value right from instance
-        //pop = new Population();
-
-        let str = editor.getValue();
-
-        str = str.replace(/\/\/.*/g, "");
-        //str = str.replace(/^\s+|[ \t\r\f]+$/gm, "");
-        str = str.replace(/^[ \t\r\f]+|[ \t\r\f]+$/gm, "");
-        const lines = str.split('\n');
-        const pop = new Population();
-        const population = parse(lines);
-        if (population != null) pop.loadNode(parse(lines));
-        console.log(pop);
-        const test = new Compile();
-        test.Generate(pop);
-        console.warn(test.output);
-        // store var
-        localStorage.setItem('population', JSON.stringify(pop));
-        /*
-        for (let i = 0; i < pop.waves.length; i++) { 
-            add_to_list('waves', `Wave ${i}`);
-            for (let x = 0; x < pop.waves[i].WaveSpawns.length; x++) { 
-                const text = `
-                Name: ${pop.waves[i].WaveSpawns[x].Name}
-                Where: ${pop.waves[i].WaveSpawns[x].Where}
-                TotalCount: ${pop.waves[i].WaveSpawns[x].TotalCount}
-                MaxActive: ${pop.waves[i].WaveSpawns[x].MaxActive}
-                SpawnCount: ${pop.waves[i].WaveSpawns[x].SpawnCount}
-                TotalCurrency: ${pop.waves[i].WaveSpawns[x].TotalCurrency}
-                SpawnType: ${pop.waves[i].WaveSpawns[x].SpawnType}
-                `
-
-                add_spawn_to_list('waves', pop.waves[i].WaveSpawns[x].Name, text);
-            }
-        }
-        */
-    });
-
-
-    $("#file-input-pop").change(function(){
+$("#file-input-pop").change(function(){
         var input = event.target;
         var reader = new FileReader();
         reader.onload = function(){
