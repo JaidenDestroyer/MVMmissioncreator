@@ -37,7 +37,7 @@ function parse(lines, line_number=0, inside=false)
                     {
                         nodeName = lines[i-1].toLowerCase();
                         nodeName_linenumber = line_number+i;
-                        if(!inside && nodeName != "waveschedule")
+                        if(!inside && nodeName != ("waveschedule" || "population"))
                         {
                             console.warn('Fatal Error When Parsing: No waveschedule detected');
 
