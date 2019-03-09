@@ -1,17 +1,5 @@
 // code editor setup
 $(document).ready(function(){
-	//code here
-	var code = $(".codemirror-textarea")[0];
-	var editor = CodeMirror.fromTextArea(code, {
-		lineNumbers : true,
-		mode: "pop",
-		theme: "night"
-	});
-
-    $("#download-button").click(function(){
-        download("popfile.pop", editor.getValue())
-    });
-
     editor.on('change',function(editor){
         // get value right from instance
         //pop = new Population();
@@ -57,9 +45,20 @@ $(document).ready(function(){
         var reader = new FileReader();
         reader.onload = function(){
              // the files content
-            var text = reader.result;
-            // load the files content into the code editor
-            editor.setValue(text);
+            var str = reader.result;
+		str = str.replace(/\/\/.*/g, "");
+		//str = str.replace(/^\s+|[ \t\r\f]+$/gm, "");
+		str = str.replace(/^[ \t\r\f]+|[ \t\r\f]+$/gm, "");
+		const lines = str.split('\n');
+		const pop = new Population();
+		const population = parse(lines);
+		if (population != null) pop.loadNode(parse(lines));
+		console.log(pop);
+		const test = new Compile();
+		test.Generate(pop);
+		console.warn(test.output);
+		// store var
+		localStorage.setItem('population', JSON.stringify(pop));
             // clear the file to allow loading of the same file multiple times
             $("#file-input-pop").prop("value", "")
         };
