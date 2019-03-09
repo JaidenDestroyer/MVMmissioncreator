@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Mission Creator</title>
+		<link rel="stylesheet" href="./css/newgui.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script>
+		<script type="text/javascript" src="./js/node.js"></script>
+		<img type="image" src="./icons/missing_texture.png"></img>
+	</head>
+	<body>
+		<header>
+			<h1> Mission Creator </h1>
+		</header>
+
+		<div class="navbar">
+			<button onclick="waves_button_click()"> Waves </button>
+			<button onclick="templates_button_click()"> Templates </button>
+			<button onclick="missions_button_click()"> Missions </button>
+			<button onclick="overview_button_click()"> Overview </button>
+		</div>
+
+		<div id="waves-container" style="display: none;">
+			<div class="wave-navbar">
+				<li>Wave 1</li>
+				<li>Wave 2</li>
+				<li>Wave 3</li>
+			</div>
+			<div class="wave">
+				<p> hello </p>
+			</div>
+		</div>
+
+		<div id="overview-container">
+			<div id="export-buttons">
+				<button> Load </button>
+				<button> Save </button>
+				<button> Test </button>
+			</div>
+		</div>
+	</body>
+	<script>
+		const waves_container = document.getElementById('waves-container');
+		const overview_container = document.getElementById('overview-container');
+		function waves_button_click()
+		{
+			waves_container.style.display = "flex";
+			overview_container.style.display = "none";
+		}
+		function overview_button_click()
+		{
+			waves_container.style.display = "none";
+			overview_container.style.display = "block";
+		}
+		//<canvas id="editor" height="3000" width="3000"></canvas>
+		//var canvas = this.__canvas = new fabric.Canvas('editor', { selection: false });
+		//fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
+	  	//var editor = new Editor();
+	  	//editor.loadPop(JSON.parse(localStorage.getItem('population')));
+
+	</script>
+</html>

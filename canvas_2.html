@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mission Editor</title>
+		<script type="text/javascript" src="./js/wavebar_2.js"></script>
+    <script type="text/javascript" src="./js/population.js"></script>
+    <script type="text/javascript" src="./js/parser.js"></script>
+    <script type="text/javascript" src="./js/popdata.js"></script>
+    <script type="text/javascript" src="./js/wave.js"></script>
+    <script type="text/javascript" src="./js/wavespawn.js"></script>
+    <script type="text/javascript" src="./js/templates.js"></script>
+    <script type="text/javascript" src="./js/bot.js"></script>
+    <script type="text/javascript" src="./js/generate.js"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
+
+		<link rel="stylesheet" href="./css/canvas.css">
+    <link rel="stylesheet" href="./css/tf2.css">
+	</head>
+	<body>
+    <div id="load-download">
+        <button type="button" id="load-button" onclick="document.getElementById('file-input-pop').click();">Load popfile</button>
+    </div>
+    <input id="file-input-pop" type="file" accept='pop' onchange="readPop();" style="display: none;"/>
+
+    <div class="wavehud">
+      <div class="waveText">
+        <span>WAVE&nbsp;</span><span id="wave">1</span><span>&nbsp;/&nbsp;</span><span id="wavemax">6</span>
+      </div>
+      <div id="progressbar">
+        <div data-waveenemycount="127" style="width: 100%;"></div>
+      </div>
+      <div class="row botContainer" id="botContainer">
+      </div>
+    </div>
+	</body>
+	<script>
+  	//editor.loadPop(JSON.parse(localStorage.getItem('population')));
+  	let items = ['./icons/Leaderboard_class_pyro_flare.png',
+  		'./icons/Leaderboard_class_scout_stun_armored.png',
+  		'./icons/Leaderboard_class_soldier_blackbox.png',
+  		'./icons/Leaderboard_class_heavy_deflector.png',
+  		'./icons/Leaderboard_class_engineer.png',
+  		'./icons/Leaderboard_class_demo_bomber.png',
+  		'./icons/Leaderboard_class_demo_burst.png',
+  		'./icons/Leaderboard_class_heavy_steelfist.png',
+  		'./icons/Leaderboard_class_scout_fan.png',
+  		'./icons/Leaderboard_class_heavy_champ.png',
+  		'./icons/Leaderboard_class_heavy.png',
+  		'./icons/Leaderboard_class_sniper.png',
+  		'./icons/Leaderboard_class_pyro.png',
+  		'./icons/Leaderboard_class_scout.png',
+  		'./icons/Leaderboard_class_medic.png',
+  		'./icons/Leaderboard_class_spy.png',
+  	];
+    window.onload = function(){
+      // your JS here
+      window.editor = new WaveBar(document.getElementsByClassName('wavehud')[0]);
+      editor.addIcon('./icons/Leaderboard_class_demo_bomber.png', 1, false, true, false);
+      editor.addIcon('./icons/Leaderboard_class_pyro.png', 1, false, false, true);
+      editor.addIcon('./icons/Leaderboard_class_spy.png', 1, true, false, false);
+      editor.addIcon('./icons/Leaderboard_class_engineer.png', 1, true, false, false);
+      editor.addIcon('./icons/Leaderboard_class_medic.png', 1, true, false, false);
+      editor.create();
+      console.log(editor.giant[0].childNodes[0].childNodes[0].setAttribute('src', './icons/Leaderboard_class_scout.png'));
+    }
+
+	</script>
+</html>
