@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: wavebar_2.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: wavebar_2.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+
+/**
+ * @author JaidenDestroyer
+ */
+
+/**
+ * Represents a wavebar
+ * @constructor
+ * @param {object} wavehud - The wavehud div element.
+ * @param {object} botcontainer - The botcontainer inside the wavehud element.
+ *
+ * @property {object}  wavehud      - The wavehud div element (passed through params)
+ * @property {object}  botcontainer - The botcontainer inside the wavehud element (passed through params)
+ * @property {array}  giant         - Array of all giant bots (if they are not support)
+ * @property {array}  normal     	- Array of all normal and critical bots (if they are not support)
+ * @property {array}  support 		- Array of all support bots
+ * @property {array}  icons 		- Array of all bots (so we don't have doubles)
+ */
+function WaveBar(wavehud, botcontainer)
+{
+	this.wavehud = wavehud;
+	this.botcontainer = botcontainer;
+	this.giant = new Array();
+	this.normal = new Array();
+	this.support = new Array();	
+	this.icons = new Array();
+
+	/** 
+	 * support bar
+	 * @access private
+	 */
+	// create support line node
+	const support_line = document.createElement("div")
+	// add class "supportBar" to support line node
+	support_line.classList.add("supportBar");
+
+	/** 
+	 * support text
+	 * @access private
+	 */
+	// create support text node
+	const support_text = document.createElement("p");
+	// set style of support text node
+	support_text.setAttribute("style", "opacity: 1; position: relative; left: 22px; margin-top: -10px");
+	// set text of support text node
+	support_text.innerText = 'support';
+
+	/** 
+	 * Add a icon to the wavebar
+	 * @function 
+	 * @param {string} src - the source of the icon
+	 * @param {number} count - the number of bots (shows below the icon)
+	 * @param {boolean} isSupport - is the bot support?
+	 * @param {boolean} isCritical - does the bot have alwayscrit?
+	 * @param {boolean} isRandomChoice - is the bot randomly choosen from a pool of other bots?
+	 * @returns {object}
+	 */
+	WaveBar.prototype.addIcon = function(src='./icons/missing_texture.png', count=1, isSupport=false, isGiant=false, isCritical=false, isRandomChoice=false)
+	{
+		/** 
+	 	* check if the icon is already on the wavebar (returns boolean)
+	 	* @access private
+	 	*/
+		const result = this.getIcon(src,isSupport,isGiant,isCritical);
+		// check if result is not null
+		if (result != null) 
+		{
+			// check if the node has 2 childnodes (the 2nd is the bot cound text)
+			if (result.childNodes.length == 2)
+			{
+				// set the bot count text to itself + 1
+				result.childNodes[1].innerText = 1 + parseInt(result.childNodes[1].innerText);
+			}
+			// log the result node in console
+			console.log(result);
+			// return result (since it already exists, we don't have to make it again)
+			return result;
+		}
+     	
+     	/** 
+	 	* the wavebot container 
+		* @access private
+	 	*/
+		const waveBot = document.createElement("div");
+		/** 
+	 	* the wavebot's icon container 
+		* @access private
+	 	*/
+		const waveBotIcon = document.createElement("div");
+		/** 
+	 	* the wavebot's icon
+		* @access private
+	 	*/
+		const botIcon = document.createElement("img");
+
+		// set WaveBot's class to "waveBot"
+		waveBot.classList.add("waveBot");
+		// set WaveBotIcon's class to "waveBotIcon"
+		waveBotIcon.classList.add("waveBotIcon");
+		// set botIcon's class to "botIcon"
+		botIcon.classList.add("botIcon");
+
+		// set the type of bot (giant, critical or normal)
+		if (!isGiant) botIcon.classList.add("normal");
+		if (isGiant) botIcon.classList.add("giant");
+		if (isCritical) botIcon.classList.add("critical");
+
+		// set the image source
+		botIcon.setAttribute("src", src);
+
+		// append them together
+		waveBotIcon.appendChild(botIcon);
+		waveBot.appendChild(waveBotIcon);
+		// check if the bot is not support
+		if (!isSupport) 
+		{
+			// create the botcount 
+			const botCount = document.createElement("p");
+			botCount.setAttribute("style", "opacity: 1;margin-top: -10px;");
+			botCount.id = "count";
+			botCount.innerText = count;
+			waveBot.appendChild(botCount);
+		}
+		// if not support, then figure out what type of support this is (second, first, other)
+		else if (this.support.length > 1) waveBot.classList.add("support");
+		else if (this.support.length) waveBot.classList.add("supportsecond");
+		else waveBot.classList.add("supportfirst");
+
+		// check what section this bot should be placed
+		if (isSupport) this.support.push(waveBot);
+		else if (isGiant) this.giant.push(waveBot);
+		else this.normal.push(waveBot);
+
+		// add icon instance to icons array
+		this.icons.push({src: src, count: count, isSupport: isSupport, isGiant: isGiant, isCritical: isCritical, waveBot: waveBot});
+
+		return waveBot;
+	}
+
+	/** 
+	 * Look for and return a icon already in the wavebar
+	 * @function 
+	 * @param {string} src - the source of the icon
+	 * @param {number} count - the number of bots (shows below the icon)
+	 * @param {boolean} isSupport - is the bot support?
+	 * @param {boolean} isCritical - does the bot have alwayscrit?
+	 * @param {boolean} isRandomChoice - is the bot randomly choose from a pool of other bots?
+	 * @returns {(object|null)} returns icon that matches params, returns null if it fails to find one
+	 */
+	WaveBar.prototype.getIcon = function(src='./icons/missing_texture.png', isSupport=false, isGiant=false, isCritical=false)
+	{
+		// loop through icons
+		for (let a = 0; a &lt; this.icons.length; a++)
+		{
+			// compare params
+			if (this.icons[a].src == src &amp;&amp; this.icons[a].isSupport == isSupport &amp;&amp; this.icons[a].isGiant == isGiant &amp;&amp; this.icons[a].isCritical == isCritical)
+			{
+				// return on success
+				return this.icons[a].waveBot;
+			}
+		}
+		// failed to find matching icon, return null
+		return null;
+	}
+
+	/** 
+	 * Look for and return a icon already in the wavebar
+	 * @function 
+	 */
+	WaveBar.prototype.create = function()
+	{
+		// append giants
+		for (let a = 0; a &lt; this.giant.length; a++)
+		{
+			// append the bot
+			this.botcontainer.appendChild(this.giant[a]);
+		}
+
+		// append normal bots
+		for (let a = 0; a &lt; this.normal.length; a++)
+		{
+			// append the bot
+			this.botcontainer.appendChild(this.normal[a]);
+		}
+		
+		// append support bots
+		if (this.support.length)
+		{
+			// are there non support bots?
+			if (this.giant.length || this.normal.length)
+			{
+				// add the support line
+				this.botcontainer.appendChild(support_line);
+			}
+			// add the support text
+			this.support[0].appendChild(support_text);
+
+			// loop through support bots
+			for (let a = 0; a &lt; this.support.length; a++)
+			{
+				// append the bot
+				this.botcontainer.appendChild(this.support[a]);
+			}
+		}
+	}
+
+	/** 
+	 * delete all icons in the wavebar
+	 * @function 
+	 */
+	WaveBar.prototype.clear = function()
+	{
+
+		this.botcontainer.innerHTML = '';
+
+		// remove support bots
+		for (let a = 0; a &lt; this.support.length; a++)
+		{
+			this.support[a].remove();
+		}
+
+		this.support.length = 0; // clear array
+
+
+		// remove giants
+		for (let a = 0; a &lt; this.giant.length; a++)
+		{
+			this.giant[a].remove();
+		}
+
+		this.giant.length = 0; // clear array
+
+		// remove normal bots
+		for (let a = 0; a &lt; this.normal.length; a++)
+		{
+			this.normal[a].remove();
+		}
+
+		this.normal.length = 0; // clear array
+	}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="parse.html">parse</a></li><li><a href="Population.html">Population</a></li><li><a href="WaveBar.html">WaveBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#get_attributes">get_attributes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 10 2019 14:44:25 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
