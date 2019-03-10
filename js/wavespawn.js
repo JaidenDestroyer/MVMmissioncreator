@@ -292,10 +292,25 @@ function WaveSpawn()
 				case 'startwaveoutput':
 						this.setStartWaveOutput(child);
 						break;
+					
 				case "tfbot":
-			    case "tank":
+			    //case "tank":
 					var bot = new Bot();
 					bot.loadNode(child);
+					console.warn(bot);
+					if (bot.classicon)
+					{
+						console.warn('passed');
+						window.editor.addIcon(`./icons/Leaderboard_class_${bot.classicon}.png`, this.totalcount);
+					}else if(bot.template != null && window.templates != null)
+					{
+						console.warn('passed2');
+						if (window.templates.getTemplateByClassName(bot.template.toLowerCase()))
+						{
+							console.warn('passed3');
+							window.editor.addIcon(`./icons/Leaderboard_class_${window.templates.getTemplateByClassName(bot.template.toLowerCase()).classicon}.png`, this.totalcount);
+						}
+					}
 					this.spawner.bots.push(bot);
 			        break;
 			    case "squad":
